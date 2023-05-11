@@ -1,5 +1,7 @@
 package com.tenco.blog.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	// 두번째 방법
 	@Query(value = " SELECT * FROM user WHERE username = ?1 AND password = ?2 " , nativeQuery = true)
 	User login(String username, String password);
+	
+	// SELECT * FROM user WHERE username = ?;
+	Optional<User> findByUsername(String username);
 }
