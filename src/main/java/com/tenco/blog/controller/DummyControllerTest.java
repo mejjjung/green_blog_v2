@@ -1,7 +1,6 @@
 package com.tenco.blog.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -9,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,12 +33,12 @@ public class DummyControllerTest {
 	// MIME TYPE - application/json
 	// 회원 등록 - 샘플
 	@PostMapping("/dummy/insert-user")
-	public String insertUser(@RequestBody User user) {
+	public String insertUser(@Validated @RequestBody User user) {
 		// 유효성 검사
 		user.setRole("user");
 		userRepository.save(user);
 		System.out.println(user.toString());
-
+		System.out.println("여기 코드 동작하나요?");
 		return "회원가입에 성공";
 	}
 
@@ -86,7 +86,7 @@ public class DummyControllerTest {
 	// 2 dirty checking 사용
 	@Transactional
 	@PutMapping("/dummy/user/{id}")
-	public User updateUser(@PathVariable Integer id, @RequestBody User reqUser) {
+	public User updateUser(@Validated @PathVariable Integer id, @RequestBody User reqUser) {
 		
 		// 인증 검사, 유효성검사 
 		// 존재 여부 확인
